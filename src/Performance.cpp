@@ -1,3 +1,5 @@
+#include <fstream>
+#include "date.h"
 #include "VI.h"
 #include "Config.h"
 #include "Performance.h"
@@ -61,4 +63,13 @@ void Performance::increaseFramesCount()
 	if (!m_enabled)
 		return;
 	m_frames++;
+
+	// opens a file ... is this done every time getFPS is called? Perhaps make it conditional on non-existance of file
+	std::ofstream outfile;
+	outfile.open("pushed_frames.txt", std::ios_base::app);
+
+	// appending stamp to above file -- "<< std::chrono::system_clock::now()" throws error. Internet says "operator<<" needs to be "overloaded"
+	using namespace std::chrono;
+
+	outfile << date::format("%F %T\n", time_point_cast<milliseconds>(system_clock::now())) << std::endl;
 }
