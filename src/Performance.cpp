@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iostream>
 #include "date.h"
 #include "VI.h"
 #include "Config.h"
@@ -71,5 +72,12 @@ void Performance::increaseFramesCount()
 	// appending stamp to above file -- "<< std::chrono::system_clock::now()" throws error. Internet says "operator<<" needs to be "overloaded"
 	using namespace std::chrono;
 
-	outfile << date::format("%F %T\n", time_point_cast<milliseconds>(system_clock::now())) << std::endl;
+	outfile << date::format("%F %T\n", time_point_cast<milliseconds>(system_clock::now()))
+
+	using namespace std;
+	std::ifstream f("/sys/class/thermal/thermal_zone0");
+	std::stringstream buf;
+	buf << f.rdbuf();
+	string fileContents = buf.str();
+	outfile << fileContents << std::endl;
 }
