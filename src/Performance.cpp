@@ -73,7 +73,6 @@ void Performance::increaseFramesCount()
 	using namespace std::chrono;
 
 	outfile << date::format("%F %T\n", time_point_cast<milliseconds>(system_clock::now()));
-	
-	fp popen("/opt/vc/bin/vcgencmd measure_temp", "r");	
-	outfile << fp << std::endl;
+		
+	outfile << popen("/opt/vc/bin/vcgencmd measure_temp", "r") << std::endl;
 }
