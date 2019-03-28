@@ -77,7 +77,7 @@ void Performance::increaseFramesCount()
 	std::ifstream f("/sys/class/thermal/thermal_zone0/temp");
 	std::stringstream buf;
 	buf << f.rdbuf();
-	string temp = buf.str();
+	temp = buf.str();
 	
 	outfile << temp << std::endl;
 }
