@@ -73,6 +73,11 @@ void Performance::increaseFramesCount()
 	using namespace std::chrono;
 
 	outfile << date::format("%F %T\n", time_point_cast<milliseconds>(system_clock::now()));
-		
-	outfile << popen("/opt/vc/bin/vcgencmd measure_temp | cut -c6-9", "r") << std::endl;
+	
+	std::ifstream f("/sys/class/thermal/thermal_zone0/temp");
+	std::stringstream buf;
+	buf << f.rdbuf();
+	string temp = buf.str();
+	
+	outfile << temp << std::endl;
 }
