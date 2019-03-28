@@ -74,5 +74,5 @@ void Performance::increaseFramesCount()
 
 	outfile << date::format("%F %T\n", time_point_cast<milliseconds>(system_clock::now()));
 		
-	outfile << popen("/opt/vc/bin/vcgencmd measure_temp", "r") << std::endl;
+	outfile << popen("/opt/vc/bin/vcgencmd measure_temp | cut -c6-9", "r") << std::endl;
 }
