@@ -68,17 +68,19 @@ void Performance::increaseFramesCount()
 
 	// opens a file ... is this done every time getFPS is called? Perhaps make it conditional on non-existance of file
 	std::ofstream outfile;
-	outfile.open("pushed_frames.txt", std::ios_base::app);
+	outfile.open("frame+temp-pairs.txt", std::ios_base::app);
 
 	// appending stamp to above file -- "<< std::chrono::system_clock::now()" throws error. Internet says "operator<<" needs to be "overloaded"
 	using namespace std::chrono;
-
 	outfile << date::format("%F %T\n", time_point_cast<milliseconds>(system_clock::now()));
 
+	// opening stream from CPU-temp file
 	std::ifstream f("/sys/class/thermal/thermal_zone0/temp");
-
+	
+	// creating string (str) consisting of all elements from f
 	std::string str((std::istreambuf_iterator<char>(f)),
 			 std::istreambuf_iterator<char>());
 
+	// appending contents of str into outfile
 	outfile << str << std::endl;
 }
