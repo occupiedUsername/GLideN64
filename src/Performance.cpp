@@ -1,4 +1,5 @@
-#include <stdio.h>
+#include <string>
+#include <streambuf>
 #include <fstream>
 #include "date.h"
 #include "VI.h"
@@ -75,8 +76,7 @@ void Performance::increaseFramesCount()
 	outfile << date::format("%F %T\n", time_point_cast<milliseconds>(system_clock::now()));
 
 	std::ifstream f("/sys/class/thermal/thermal_zone0/temp");
-	std::stringstream buf;
-	buf << f.rdbuf();
-	
-	outfile << buf.str() << std::endl;
+	std::string str(std::istreambuf_iterator<char>(f));
+
+	outfile << str << std::endl;
 }
