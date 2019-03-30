@@ -76,7 +76,9 @@ void Performance::increaseFramesCount()
 	outfile << date::format("%F %T\n", time_point_cast<milliseconds>(system_clock::now()));
 
 	std::ifstream f("/sys/class/thermal/thermal_zone0/temp");
-	std::string str(std::istreambuf_iterator<char>(f));
+
+	std::string str((std::istreambuf_iterator<char>(f)),
+			 std::istreambuf_iterator<char>());
 
 	outfile << str << std::endl;
 }
